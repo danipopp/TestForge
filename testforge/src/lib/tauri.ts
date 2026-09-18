@@ -1,4 +1,6 @@
 import { invoke } from "@tauri-apps/api/core"
+import { open } from "@tauri-apps/plugin-dialog"
+
 import type { Project } from "../features/project/project.types"
 
 export async function createProject(
@@ -9,3 +11,4 @@ export async function createProject(
     { name }
   )
 }
+

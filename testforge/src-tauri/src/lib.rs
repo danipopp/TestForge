@@ -1,7 +1,10 @@
 mod commands;
 mod domain;
 
-use commands::project::create_project;
+use commands::project::{
+    create_project,
+    save_project,
+};
 
 // Das ist der Einstiegspunkt unserer Tauri-Anwendung.
 //
@@ -16,11 +19,15 @@ pub fn run() {
     //
     // `.default()` startet mit den Standard-Einstellungen.
     tauri::Builder::default()
+
+        .plugin(tauri_plugin_dialog::init())
+        
         // Hier registrieren wir unsere Rust-Funktionen,
         // die von React aufgerufen werden dürfen.
         .invoke_handler(
             tauri::generate_handler![
-                create_project
+                create_project,
+                save_project
             ]
         )
 
