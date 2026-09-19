@@ -12,3 +12,25 @@ export async function createProject(
   )
 }
 
+export async function selectProjectFolder(): Promise<string | null> {
+
+  const selected = await open({
+    directory: true,
+    multiple: false,
+  })
+
+  return selected 
+}
+
+export async function saveProject(
+  project: Project,
+  parentPath: string,
+): Promise<void> {
+  await invoke (
+    "save_project",
+    {
+      project,
+      parentPath,
+    }
+  )
+}

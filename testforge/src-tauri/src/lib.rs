@@ -20,6 +20,9 @@ pub fn run() {
     // `.default()` startet mit den Standard-Einstellungen.
     tauri::Builder::default()
 
+        // Enable the Tauri dialog plugin.
+        // This gives our frontend access to native dialogs
+        // such as the folder-selection dialog.
         .plugin(tauri_plugin_dialog::init())
         
         // Hier registrieren wir unsere Rust-Funktionen,

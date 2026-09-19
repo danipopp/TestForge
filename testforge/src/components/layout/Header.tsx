@@ -2,10 +2,12 @@ import type { Project } from "../../features/project/project.types"
 
 interface HeaderProps {
   project: Project | null
+  onSave: () => void
 }
 
 export function Header({
-  project
+  project,
+  onSave
 }: HeaderProps) {
   return (
     <header className="header">
@@ -15,6 +17,10 @@ export function Header({
           ? project.name
           : "No Project Open"}
       </h1>
+
+      <button onClick={onSave}>
+        Save Project
+      </button>
 
     </header>
   )

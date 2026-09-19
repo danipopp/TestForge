@@ -27,7 +27,8 @@ export default function App() {
 
   const {
     project,
-    create
+    create,
+    save
   } = useProject()
 
   return (
@@ -46,6 +47,7 @@ export default function App() {
         header={
           <Header
             project={project}
+            onSave={save}
           />
         }
       >

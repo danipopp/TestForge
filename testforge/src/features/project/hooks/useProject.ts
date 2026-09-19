@@ -1,6 +1,10 @@
 import { useState } from "react"
 import type { Project } from "../project.types"
-import { createProject } from "../../../lib/tauri"
+import { 
+  createProject,
+  selectProjectFolder,
+  saveProject,
+} from "../../../lib/tauri"
 
 export function useProject() {
   const [project, setProject] =
@@ -13,8 +17,21 @@ export function useProject() {
     setProject(newProject)
   }
 
+  async function save() {
+    if (!project){
+      return
+    }
+    const folder = await selectProjectFolder()
+
+    if (!folder) {
+      return
+    }
+    await saveProject(project, folder)
+  }
+
   return {
     project,
-    create
+    create,
+    save,
   }
 }
