@@ -40,7 +40,7 @@ export async function openProject(projectPath: string) : Promise<Project | null>
   const project = await invoke<Project>(
     "open_project", 
     {
-      folder_path : projectPath,
+      folderPath : projectPath,
     }
   )
   return project

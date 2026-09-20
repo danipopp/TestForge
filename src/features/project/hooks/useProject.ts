@@ -38,7 +38,7 @@ export function useProject() {
     }
     const project = await openProject(folder)
 
-    if (!project) {
+    if (project) {
       setProject(project)
     }
   }
