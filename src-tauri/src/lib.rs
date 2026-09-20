@@ -4,6 +4,7 @@ mod domain;
 use commands::project::{
     create_project,
     save_project,
+    open_project,
 };
 
 // Das ist der Einstiegspunkt unserer Tauri-Anwendung.
@@ -30,7 +31,8 @@ pub fn run() {
         .invoke_handler(
             tauri::generate_handler![
                 create_project,
-                save_project
+                save_project,
+                open_project
             ]
         )
 

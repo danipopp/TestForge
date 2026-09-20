@@ -34,3 +34,14 @@ export async function saveProject(
     }
   )
 }
+
+export async function openProject(projectPath: string) : Promise<Project | null>{
+  // Tell Rust which folder the user selected.
+  const project = await invoke<Project>(
+    "open_project", 
+    {
+      folder_path : projectPath,
+    }
+  )
+  return project
+}

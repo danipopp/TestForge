@@ -2,7 +2,7 @@
 //
 // `crate` bedeutet:
 // "Starte beim Root unseres Rust-Projekts."
-use crate::domain::project::Project;
+use crate::{domain::project::Project};
 
 // `#[tauri::command]` ist ein spezielles Tauri-Makro.
 //
@@ -46,4 +46,26 @@ pub fn save_project(project: Project, parent_path: String) -> Result<(), String>
     let project_file = project_path.join("project.json");
     std::fs::write(&project_file,json).map_err(|error| error.to_string())?;
     Ok(())
+}
+
+#[tauri::command]
+pub fn open_project(folder_path: String) -> Result<Project, String> {
+    // Convert the String we received from JavaScript
+    // into a PathBuf.
+    //
+    // PathBuf is Rust's type for working with file paths.
+    let folder_path = std::path::PathBuf::from(folder_path);
+
+    // Add "project.json" to the selected project folder.
+    let project_file = folder_path.join("project.json");
+
+    // Read the entire project.json file as text.
+    let json = std::fs::read_to_string(&project_file)
+        .map_err(|error| error.to_string())?;
+
+    // Convert the JSON text into our Rust Project struct.
+    let project: Project = serde_json::from_str(&json)
+        .map_err(|error|error.to_string())?;
+
+    Ok(project)
 }

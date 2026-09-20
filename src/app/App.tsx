@@ -28,7 +28,8 @@ export default function App() {
   const {
     project,
     create,
-    save
+    save,
+    open
   } = useProject()
 
   return (
@@ -48,6 +49,7 @@ export default function App() {
           <Header
             project={project}
             onSave={save}
+            onOpen={open}
           />
         }
       >

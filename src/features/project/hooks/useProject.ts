@@ -4,6 +4,7 @@ import {
   createProject,
   selectProjectFolder,
   saveProject,
+  openProject,
 } from "../../../lib/tauri"
 
 export function useProject() {
@@ -29,9 +30,23 @@ export function useProject() {
     await saveProject(project, folder)
   }
 
+  async function open() {
+    const folder = await selectProjectFolder()
+    
+    if (!folder) {
+      return
+    }
+    const project = await openProject(folder)
+
+    if (!project) {
+      setProject(project)
+    }
+  }
+
   return {
     project,
     create,
     save,
+    open,
   }
 }
