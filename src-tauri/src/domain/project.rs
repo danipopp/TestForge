@@ -11,4 +11,6 @@ pub struct Project {
     pub id: String,
     pub name: String,
     pub created_at: String,
+
+    pub path: String, // Location of the project on the computer
 }

@@ -29,11 +29,16 @@ pub fn create_project(name: String) -> Project {
         id: uuid::Uuid::new_v4().to_string(),
         name,
         created_at: chrono::Utc::now().to_rfc3339(),
+        // We don't know the project folder yet.
+        //
+        // The user chooses the folder when they save
+        // the project for the first time.
+        path: String::new(),
     }
 }
 
 #[tauri::command]
-pub fn save_project(project: Project, parent_path: String) -> Result<(), String> {
+pub fn save_project(mut project: Project, parent_path: String) -> Result<(), String> {
     let parent_path = std::path::PathBuf::from(parent_path);
     let project_path = parent_path.join(&project.name);
 
@@ -41,6 +46,8 @@ pub fn save_project(project: Project, parent_path: String) -> Result<(), String>
     std::fs::create_dir_all(project_path.join("data")).map_err(|error| error.to_string())?;
     std::fs::create_dir_all(project_path.join("results")).map_err(|error| error.to_string())?;
     std::fs::create_dir_all(project_path.join("reports")).map_err(|error| error.to_string())?;
+
+    project.path = parent_path.to_string_lossy().to_string();
 
     let json = serde_json::to_string_pretty(&project).map_err(|error| error.to_string())?;
     let project_file = project_path.join("project.json");
