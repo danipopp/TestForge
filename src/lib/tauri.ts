@@ -25,14 +25,17 @@ export async function selectProjectFolder(): Promise<string | null> {
 export async function saveProject(
   project: Project,
   parentPath: string,
-): Promise<void> {
-  await invoke (
-    "save_project",
-    {
-      project,
-      parentPath,
-    }
-  )
+): Promise<Project> {
+
+  const savedProject = 
+    await invoke<Project> (
+      "save_project",
+      {
+        project,
+        parentPath,
+      }
+    )
+  return savedProject
 }
 
 export async function openProject(projectPath: string) : Promise<Project | null>{

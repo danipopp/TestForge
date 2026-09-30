@@ -38,7 +38,7 @@ pub fn create_project(name: String) -> Project {
 }
 
 #[tauri::command]
-pub fn save_project(mut project: Project, parent_path: String) -> Result<(), String> {
+pub fn save_project(mut project: Project, parent_path: String) -> Result<Project, String> {
     let parent_path = std::path::PathBuf::from(parent_path);
     let project_path = parent_path.join(&project.name);
 
@@ -52,7 +52,7 @@ pub fn save_project(mut project: Project, parent_path: String) -> Result<(), Str
     let json = serde_json::to_string_pretty(&project).map_err(|error| error.to_string())?;
     let project_file = project_path.join("project.json");
     std::fs::write(&project_file,json).map_err(|error| error.to_string())?;
-    Ok(())
+    Ok(project)
 }
 
 #[tauri::command]

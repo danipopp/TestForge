@@ -22,12 +22,21 @@ export function useProject() {
     if (!project){
       return
     }
+    if (project.path) {
+      const savedProject = await saveProject(project, project.path)
+
+      setProject(savedProject)
+      
+      return
+    }
     const folder = await selectProjectFolder()
 
     if (!folder) {
       return
     }
-    await saveProject(project, folder)
+    const savedProject = await saveProject(project, folder)
+    
+    setProject(savedProject)
   }
 
   async function open() {
