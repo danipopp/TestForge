@@ -34,7 +34,8 @@ export function useProject() {
     if (!folder) {
       return
     }
-    const savedProject = await saveProject(project, folder)
+    const projectPath = `${folder}/${project.name}`
+    const savedProject = await saveProject(project, projectPath)
     
     setProject(savedProject)
   }

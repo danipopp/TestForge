@@ -38,16 +38,15 @@ pub fn create_project(name: String) -> Project {
 }
 
 #[tauri::command]
-pub fn save_project(mut project: Project, parent_path: String) -> Result<Project, String> {
-    let parent_path = std::path::PathBuf::from(parent_path);
-    let project_path = parent_path.join(&project.name);
+pub fn save_project(mut project: Project, project_path: String) -> Result<Project, String> {
+    let project_path = std::path::PathBuf::from(project_path);
 
     std::fs::create_dir_all(&project_path).map_err(|error| error.to_string())?;
     std::fs::create_dir_all(project_path.join("data")).map_err(|error| error.to_string())?;
     std::fs::create_dir_all(project_path.join("results")).map_err(|error| error.to_string())?;
     std::fs::create_dir_all(project_path.join("reports")).map_err(|error| error.to_string())?;
 
-    project.path = parent_path.to_string_lossy().to_string();
+    project.path = project_path.to_string_lossy().to_string();
 
     let json = serde_json::to_string_pretty(&project).map_err(|error| error.to_string())?;
     let project_file = project_path.join("project.json");

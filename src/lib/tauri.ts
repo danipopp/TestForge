@@ -24,7 +24,7 @@ export async function selectProjectFolder(): Promise<string | null> {
 
 export async function saveProject(
   project: Project,
-  parentPath: string,
+  projectPath: string,
 ): Promise<Project> {
 
   const savedProject = 
@@ -32,7 +32,7 @@ export async function saveProject(
       "save_project",
       {
         project,
-        parentPath,
+        projectPath,
       }
     )
   return savedProject
